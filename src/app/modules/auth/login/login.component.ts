@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 import * as AuthActions  from '../../../store/auth/auth.actions';
 import { AuthState } from '../../../store/auth/auth.state';
 import { Observable } from 'rxjs';
-import { selectUsername } from 'src/app/store/auth/auth.selectors';
+import { selectIsLoggedIn, selectUsername } from 'src/app/store/auth/auth.selectors';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,20 +15,24 @@ import { selectUsername } from 'src/app/store/auth/auth.selectors';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  username$: Observable<string | null>;
   username: any = '';
 
-  constructor(private fb: FormBuilder, private store: Store<AuthState>) {
+  constructor(private fb: FormBuilder, private router: Router,private store: Store<AuthState>) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.username$ = this.store.select(selectUsername);
   }
 
   ngOnInit(): void {
-    this.username$.subscribe(username => {
+    this.store.select(selectUsername).subscribe(username => {
       this.username = username;
+    });
+
+    this.store.select(selectIsLoggedIn).subscribe(isLogin => {
+      if(isLogin){
+        this.router.navigate(['/home']);
+      }
     });
   }
 

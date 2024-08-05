@@ -31,7 +31,14 @@ export class LoginComponent {
 
     this.store.select(selectIsLoggedIn).subscribe(isLogin => {
       if(isLogin){
-        this.router.navigate(['/home']);
+        if(this.username === 'admin'){
+          this.router.navigate(['/home']);
+        }
+        else{
+          this.router.navigate(['/order']);
+        }
+
+        localStorage.setItem("username", this.username)
       }
     });
   }

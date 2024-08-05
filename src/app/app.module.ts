@@ -14,15 +14,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreOwnerComponent } from './modules/store-owner/store-owner.component'; // Import the AppRoutingModule
 import { ProductsEffects, productsReducer } from './store/products';
 import { HomeComponent } from './modules/home/home.component';
+import { OrderComponent } from './modules/order/order.component';
+import { CartService } from './services/cart.service';
+import { CartEffects, cartReducer } from './store/cart';
+import { CartComponent } from './modules/cart/cart.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, StoreOwnerComponent, HomeComponent],
+  declarations: [AppComponent, LoginComponent, StoreOwnerComponent, HomeComponent, OrderComponent, CartComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({ auth: authReducer, products: productsReducer }),
-    EffectsModule.forRoot([AuthEffects, ProductsEffects]),
+    StoreModule.forRoot({ auth: authReducer, products: productsReducer, cart: cartReducer }),
+    EffectsModule.forRoot([AuthEffects, ProductsEffects, CartEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25 // Retains last 25 states
     }),

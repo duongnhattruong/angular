@@ -1,0 +1,26 @@
+// src/app/order/order.component.scss
+.container {
+    max-width: 900px; // Đặt chiều rộng tối đa cho container
+  }
+  
+  h2 {
+    font-weight: bold; // Đặt font-weight cho tiêu đề
+  }
+  
+  .table {
+    th, td {
+      text-align: center; // Căn giữa nội dung của th và td
+      vertical-align: middle; // Căn giữa theo chiều dọc
+    }
+  
+    .btn {
+      margin: 0 5px; // Khoảng cách giữa các nút
+    }
+  }
+
+
+.alert {
+    text-align: center;
+    font-weight: bold;
+  }
+  

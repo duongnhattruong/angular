@@ -1,9 +1,11 @@
 // src/app/store/cart/cart.selectors.ts
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { CartState } from './cart.state';
 
-export const selectCartState = createFeatureSelector<any[]>('cart');
+export const selectCartState = createFeatureSelector<CartState>('cart');
 
-export const selectAllCartItems = createSelector(
-  selectCartState,
-  (state: any[]) => state
-);
+export const selectIsAddToCartSuccessful = createSelector(
+    selectCartState,
+    (state) => state.isAddToCartSuccess
+  );
+ 

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { loadProducts } from 'src/app/store/products';
 import { selectAllProducts } from 'src/app/store/products';
 import { ProductsState } from 'src/app/store/products';
-import { addToCart } from 'src/app/store/cart';
+import { addToCart, cartReducer, selectIsAddToCartSuccessful } from 'src/app/store/cart';
 import { selectUsername } from 'src/app/store/auth';
 import { Router } from '@angular/router';
 
@@ -37,13 +37,16 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(loadProducts());
     this.usernameDisplay = localStorage.getItem("username") || '';
+    this.store.select(selectIsAddToCartSuccessful).subscribe(value => {
+      if(value){
+        this.showAlertMessage();
+      }
+    })
   }
 
   addToCart(id: string): void {
     console.log('add to cart ', id);
-    
     this.store.dispatch(addToCart({ id }));
-    this.showAlertMessage();
   }
 
   viewCart() {

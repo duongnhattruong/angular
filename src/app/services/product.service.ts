@@ -2,30 +2,29 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://192.168.1.14:3000/api/products'; 
-
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<any[]> {
-    return this.http.get<{ message: string; data: any[] }>(this.apiUrl).pipe(
+    return this.http.get<{ message: string; data: any[] }>(`${environment.apiUrl}/getProduct`).pipe(
       map(response => response.data)
     );
   }
 
   deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${environment.apiUrl}/deleteProduct/${id}`);
   }
 
   updateProduct(product: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
+    return this.http.put<any>(`${environment.apiUrl}/updateProduct`, product);
   }
 
   addProduct(product: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, product);
+    return this.http.post<any>(`${environment.apiUrl}/addProduct`, product);
   }
 }

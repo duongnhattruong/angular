@@ -1,0 +1,15 @@
+<!-- src/app/header/header.component.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="navbar-brand" routerLink="/">Home</a>
+          </li>
+        </ul>
+        <div *ngIf="isLoggedin" class="hi-user"> Hi {{username}} </div>
+        <button *ngIf="isLoggedin" class="btn btn-outline-danger" (click)="onLogout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+  

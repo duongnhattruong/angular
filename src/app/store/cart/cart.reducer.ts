@@ -1,6 +1,6 @@
 // src/app/store/cart/cart.reducer.ts
 import { createReducer, on } from '@ngrx/store';
-import { addToCart, addToCartSuccess } from './cart.actions';
+import { addToCart, addToCartSuccess, resetIsSuccessful } from './cart.actions';
 
 export const initialState: string[] = []; // Change the state type to array of strings
 
@@ -14,6 +14,10 @@ const _cartReducer = createReducer(
   on(addToCart, (state, { id }) => ({
     ...state,
     id,
+    isAddToCartSuccess: false
+  })),
+  on(resetIsSuccessful, (state) => ({
+    ...state,
     isAddToCartSuccess: false
   })),
 );

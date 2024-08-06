@@ -10,3 +10,7 @@ export const addToCartSuccess = createAction(
   '[Cart] Add to Cart Success',
   props<{ id: string }>()
 );
+
+export const resetIsSuccessful = createAction(
+  '[Cart] reset Cart Success'
+);

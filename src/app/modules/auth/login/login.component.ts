@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as AuthActions  from '../../../store/auth/auth.actions';
 import { AuthState } from '../../../store/auth/auth.state';
 import { Observable } from 'rxjs';
-import { selectIsLoggedIn, selectUsername } from 'src/app/store/auth/auth.selectors';
+import { selectIsLoggedIn, selectRole, selectUsername } from 'src/app/store/auth/auth.selectors';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   username: any = '';
+  role: any = '';
 
   constructor(private fb: FormBuilder, private router: Router,private store: Store<AuthState>) {
     this.loginForm = this.fb.group({
@@ -25,20 +26,23 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    this.store.select(selectUsername).subscribe(username => {
-      this.username = username;
+    this.store.select(selectUsername).subscribe(value => {
+      this.username = value;
+    });
+
+    this.store.select(selectRole).subscribe(value => {
+      this.role = value;
     });
 
     this.store.select(selectIsLoggedIn).subscribe(isLogin => {
       if(isLogin){
-        if(this.username === 'admin'){
+      
+        if(this.role === 'admin'){
           this.router.navigate(['/home']);
         }
         else{
           this.router.navigate(['/order']);
         }
-
-        localStorage.setItem("username", this.username)
       }
     });
   }

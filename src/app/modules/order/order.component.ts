@@ -1,12 +1,12 @@
 // src/app/order/order.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { loadProducts } from 'src/app/store/products';
 import { selectAllProducts } from 'src/app/store/products';
 import { ProductsState } from 'src/app/store/products';
-import { addToCart, cartReducer, selectIsAddToCartSuccessful } from 'src/app/store/cart';
-import { selectUsername } from 'src/app/store/auth';
+import { addToCart, resetIsSuccessful, selectIsAddToCartSuccessful } from 'src/app/store/cart';
+import { AuthState, selectRole, selectUsername } from 'src/app/store/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,26 +17,31 @@ import { Router } from '@angular/router';
 export class OrderComponent implements OnInit {
   products: any = [];
   username = '';
-  usernameDisplay = '';
   showAlert: boolean = false;
+  private readonly destroy$ = new Subject<void>();
 
-  constructor(private store: Store<ProductsState>, private router: Router) {
-    this.store.select(selectAllProducts).subscribe(value => {
+  constructor(private store: Store<AuthState>, private router: Router) {
+    this.store.select(selectAllProducts).pipe(takeUntil(this.destroy$)).subscribe(value => {
       if(value){
         this.products = value;
       }
     });
 
-    this.store.select(selectUsername).subscribe(value => {
+    this.store.select(selectUsername).pipe(takeUntil(this.destroy$)).subscribe(value => {
       if(value){
         this.username = value;
+      }
+    });
+
+    this.store.select(selectRole).pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if(value && value !== 'user'){
+       this.router.navigate(['/'])
       }
     });
   }
 
   ngOnInit(): void {
     this.store.dispatch(loadProducts());
-    this.usernameDisplay = localStorage.getItem("username") || '';
     this.store.select(selectIsAddToCartSuccessful).subscribe(value => {
       if(value){
         this.showAlertMessage();
@@ -58,5 +63,12 @@ export class OrderComponent implements OnInit {
     setTimeout(() => {
       this.showAlert = false;
     }, 700); 
+  }
+
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.store.dispatch(resetIsSuccessful());
   }
 }

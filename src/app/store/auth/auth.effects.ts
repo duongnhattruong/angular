@@ -12,9 +12,9 @@ export class AuthEffects {
       ofType(AuthActions.login),
       mergeMap(action =>
         this.authService.login(action.username, action.password).pipe(
-          map(username => {
-            if (username) {
-              return AuthActions.loginSuccess({ username });
+          map(data => {
+            if (data.username) {
+              return AuthActions.loginSuccess({ username: data.username, role: data.role });
             } else {
               return AuthActions.loginFailure();
             }

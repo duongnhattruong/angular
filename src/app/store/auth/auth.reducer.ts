@@ -4,21 +4,34 @@ import * as AuthActions from './auth.actions';
 
 export const authReducer = createReducer(
   initialAuthState,
-  on(AuthActions.loginSuccess, (state, { username }) => ({
+  on(AuthActions.loginSuccess, (state, { username, role }) => {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('username', username);
+    localStorage.setItem('role', role);
+    return {
     ...state,
     isLoggedIn: true,
-    username
-  })),
+    username, 
+    role
+  }
+}),
   on(AuthActions.loginFailure, (state) => {
-    return ({
+    return {
       ...state,
       isLoggedIn: false,
-      username: ''
-    })
+      username: '',
+      role: ''
+    }
   }),
-  on(AuthActions.logout, (state) => ({
+  on(AuthActions.logout, (state) => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    return {
     ...state,
     isLoggedIn: false,
-    username: null
-  }))
+    username: null,
+    role: null
+  }
+})
 );

@@ -18,12 +18,17 @@ import { OrderComponent } from './modules/order/order.component';
 import { CartService } from './services/cart.service';
 import { CartEffects, cartReducer } from './store/cart';
 import { CartComponent } from './modules/cart/cart.component';
+import { HeaderComponent } from './modules/header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, StoreOwnerComponent, HomeComponent, OrderComponent, CartComponent],
+  declarations: [AppComponent, LoginComponent, StoreOwnerComponent, HomeComponent, OrderComponent, CartComponent, HeaderComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot({preventDuplicates: true, timeOut: 1000}),
     HttpClientModule,
     StoreModule.forRoot({ auth: authReducer, products: productsReducer, cart: cartReducer }),
     EffectsModule.forRoot([AuthEffects, ProductsEffects, CartEffects]),

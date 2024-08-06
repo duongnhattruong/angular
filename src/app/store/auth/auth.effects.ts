@@ -25,5 +25,17 @@ export class AuthEffects {
     )
   );
 
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.logout),
+      mergeMap(() =>
+        this.authService.logout().pipe(
+          map(() => AuthActions.logoutSuccess()),
+          catchError(() => of(AuthActions.logoutFailure()))
+        )
+      )
+    )
+  );
+
   constructor(private actions$: Actions, private authService: AuthService) {}
 }

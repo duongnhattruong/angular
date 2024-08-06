@@ -24,4 +24,9 @@ export class AuthService {
       })
     );
   }
+
+  logout(): Observable<any> {
+    console.log('logged out ');
+    return this.http.post<any>(`${environment.apiUrl}/logout`, {});
+  }
 }

@@ -28,10 +28,19 @@ export const authReducer = createReducer(
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     return {
+      ...state,
+      isLoggedIn: false,
+      username: null,
+      role: null
+    };
+  }),
+  on(AuthActions.logoutSuccess, (state) => ({
     ...state,
     isLoggedIn: false,
     username: null,
     role: null
-  }
-})
+  })),
+  on(AuthActions.logoutFailure, (state) => ({
+    ...state
+  }))
 );

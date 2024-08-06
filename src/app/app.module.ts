@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/auth/login/login.component';
@@ -21,6 +21,7 @@ import { CartComponent } from './modules/cart/cart.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, StoreOwnerComponent, HomeComponent, OrderComponent, CartComponent, HeaderComponent],
@@ -37,7 +38,9 @@ import { ToastrModule } from 'ngx-toastr';
     }),
     AppRoutingModule // Add the AppRoutingModule here
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

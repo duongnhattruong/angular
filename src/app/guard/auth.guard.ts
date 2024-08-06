@@ -5,8 +5,6 @@ import { AuthService } from '../services/auth.service';
 import { AuthState, selectIsLoggedIn } from '../store/auth';
 import { Store } from '@ngrx/store';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,9 +14,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(private store: Store<AuthState>, private authService: AuthService, private router: Router) {
     this.store.select(selectIsLoggedIn).subscribe(value => {
-      if (value) {
         this.isLogin = value;
-      }
     }
   )
   }
@@ -27,7 +23,7 @@ export class AuthGuard implements CanActivate {
     if (this.isLogin) {
       return true;
     } else {
-      this.router.navigate(['/login']); // Điều hướng về trang login
+      this.router.navigate(['/login']); 
       return false;
     }
   }

@@ -7,18 +7,31 @@
     font-weight: bold; // Đặt font-weight cho tiêu đề
   }
   
-  .table {
-    th, td {
-      text-align: center; // Căn giữa nội dung của th và td
-      vertical-align: middle; // Căn giữa theo chiều dọc
-    }
+  .row {
+    display: flex;
+    flex-wrap: wrap; /* Wrap items to fit within container */
+    justify-content: space-around; /* Space items evenly */
+  }
   
-    .btn {
-      margin: 0 5px; // Khoảng cách giữa các nút
-    }
+  .card {
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden; /* Hide overflow content */
+    transition: transform 0.3s; /* Smooth transition on hover */
+    height: 100%; /* Ensure full height for consistent size */
   }
 
+  .card-img-top {
+    max-height: 150px; /* Limit image height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-bottom: 1px solid #ddd; /* Separator between image and content */
+  }
 
+  .btn {
+    margin: 0 5px; // Khoảng cách giữa các nút
+  }
+  
 .alert {
     text-align: center;
     font-weight: bold;

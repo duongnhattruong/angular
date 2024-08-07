@@ -3,17 +3,16 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="my-4">Order Products</h2>
 
-    <div *ngIf="showAlert" class="alert alert-success" role="alert">
+    <div *ngIf="showAlert" class="alert alert-success fixed-alert" role="alert">
       Added successfully!
     </div>
 
     <button class="btn btn-primary" (click)="viewCart()">View Cart</button>
     <!-- <h4 class="">{{usernameDisplay}}</h4> -->
   </div>
-</div>
 
 <div class="container-lg">
-  <div class="row">
+  <div class="row justify-content-start">
     <div class="col-md-3 col-sm-6 mb-4" *ngFor="let product of products">
       <div class="card h-100">
         <img
@@ -40,4 +39,6 @@
       </div>
     </div>
   </div>
+</div>
+
 </div>

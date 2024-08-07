@@ -17,7 +17,7 @@
     <div class="col-md-3 col-sm-6 mb-4" *ngFor="let product of products">
       <div class="card h-100">
         <img
-          src="{{ product.imageUrl ? product.imageUrl : 'unknown' }}"
+          src="{{ product.imageUrl ? product.imageUrl : '../../assets/no-image.png' }}"
           class="card-img-top"
           alt="{{ product.name }}"
         />
@@ -28,9 +28,14 @@
           <p class="card-text">
             <strong>Price: </strong>{{ product.price | currency }}
           </p>
-          <button class="btn btn-primary btn-sm" (click)="addToCart(product.id.toString())">
-            Add to Cart
-          </button>
+          <div class="d-flex justify-content-center">
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="addToCart(product.id)"
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </div>

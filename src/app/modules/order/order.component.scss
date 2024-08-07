@@ -23,13 +23,19 @@
   }
 
   .card-img-top {
-    max-height: 150px; /* Limit image height */
+    max-height: 250px; /* Limit image height */
     object-fit: cover; /* Maintain aspect ratio */
     border-bottom: 1px solid #ddd; /* Separator between image and content */
   }
 
   .btn {
     margin: 0 5px; // Khoảng cách giữa các nút
+  }
+
+  .card-body .btn {
+    margin: 0.5rem 0; /* Add margin to buttons */
+    width: 100%; /* Make the button take full width */
+    max-width: 200px; /* Optional: limit the button's maximum width */
   }
   
 .alert {

@@ -88,6 +88,7 @@ export class StoreOwnerComponent implements OnInit {
   onUpdateProduct(): void {
     if (this.editProductForm.valid && this.currentProductId !== null) {
       const updatedProduct = this.editProductForm.value;
+      updatedProduct.id = this.currentProductId;
       this.productService.updateProduct(updatedProduct).subscribe(() => {
         this.store.dispatch(loadProducts());
         this.editProductForm.reset();

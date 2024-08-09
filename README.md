@@ -1,3 +1,29 @@
+# Installation
+Video tutorial: https://www.youtube.com/watch?v=-cdk3hJP8uQ (note: use `npm i @angular/cli@16.1.8` instead of `npm i @angular/cli`)
+
+Step 1: Install NodeJs - Recommend using LTS version
+
+`https://nodejs.org/en/download/prebuilt-installer/current`
+
+Step 2: Clone this project
+
+Step 3: Inside project's terminal:
+
+`npm i @angular/cli@16.1.8`
+
+`npm install`
+
+Step 4: Go to `environment.ts` file:
+
+Edit the apiUrl address to match the backend api address.
+Angular will use this address to call your api.
+
+Step 5: Running
+
+`npm start` 
+
+Navigate to  `http://localhost:4200/` for application.
+
 # Practice
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.8.

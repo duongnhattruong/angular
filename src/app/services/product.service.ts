@@ -16,6 +16,12 @@ export class ProductService {
     );
   }
 
+  getProductsByPage(page: number): Observable<any[]> {
+    return this.http.get<{ message: string; data: any[] }>(`${environment.apiUrl}/getProduct/page/${page}`).pipe(
+      map(response => response.data)
+    );
+  }
+
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/deleteProduct/${id}`);
   }

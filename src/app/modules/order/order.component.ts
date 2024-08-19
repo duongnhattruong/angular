@@ -2,12 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { loadProducts } from 'src/app/store/products';
+import { loadProducts, loadProductsByPage } from 'src/app/store/products';
 import { selectAllProducts } from 'src/app/store/products';
 import { ProductsState } from 'src/app/store/products';
 import { addToCart, resetIsSuccessful, selectIsAddToCartSuccessful } from 'src/app/store/cart';
 import { AuthState, selectRole, selectUsername } from 'src/app/store/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -18,9 +18,10 @@ export class OrderComponent implements OnInit {
   products: any = [];
   username = '';
   showAlert: boolean = false;
+  page: number = 1;
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private store: Store<AuthState>, private router: Router) {
+  constructor(private store: Store<AuthState>, private router: Router, private route: ActivatedRoute) {
     this.store.select(selectAllProducts).pipe(takeUntil(this.destroy$)).subscribe(value => {
       if(value){
         this.products = value;
@@ -38,10 +39,16 @@ export class OrderComponent implements OnInit {
        this.router.navigate(['/'])
       }
     });
+
+    this.route.queryParams.subscribe(params => {
+      if(params) {
+        this.page = params['page'];
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadProducts());
+    this.store.dispatch(loadProductsByPage({page: this.page}));
     this.store.select(selectIsAddToCartSuccessful).subscribe(value => {
       if(value){
         this.showAlertMessage();

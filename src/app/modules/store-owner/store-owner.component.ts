@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { loadProducts } from 'src/app/store/products';
+import { loadProducts, loadProductsByPage } from 'src/app/store/products';
 import { selectAllProducts } from 'src/app/store/products';
 import { ProductsState } from 'src/app/store/products';
 import { ProductService } from '../../services/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { selectRole } from 'src/app/store/auth';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 declare var bootstrap: any;
 
@@ -25,13 +25,15 @@ export class StoreOwnerComponent implements OnInit {
   editProductForm: FormGroup;
   currentProductId: number | null = null;
   productIdToDelete: number | null = null;
+  page: number = 1;
 
   constructor(
     private store: Store<ProductsState>,
     private fb: FormBuilder,
     private productService: ProductService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.products$ = this.store.select(selectAllProducts);
     this.addProductForm = this.fb.group({
@@ -51,10 +53,16 @@ export class StoreOwnerComponent implements OnInit {
        this.router.navigate(['/'])
       }
     });
+
+    this.route.queryParams.subscribe(params => {
+      if(params) {
+        this.page = params['page'];
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadProducts());
+    this.store.dispatch(loadProductsByPage({page: this.page}));
   }
 
   openAddProductModal(): void {

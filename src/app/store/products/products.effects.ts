@@ -9,9 +9,9 @@ import * as ProductsActions from './products.actions';
 export class ProductsEffects {
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductsActions.loadProducts),
-      mergeMap(() =>
-        this.productService.getProducts().pipe(
+      ofType(ProductsActions.loadProductsByPage),
+      mergeMap((action) =>
+        this.productService.getProductsByPage(action.page).pipe(
           map(products => ProductsActions.loadProductsSuccess({ products })),
           catchError(error => of(ProductsActions.loadProductsFailure({ error })))
         )

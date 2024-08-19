@@ -16,7 +16,7 @@ export class CartService {
   }
 
   getCart(): Observable<any[]> {
-    return this.http.get<{message: string; data: any[]}>(environment.apiUrl + '/cart').pipe(
+    return this.http.get<{message: string; data: any[]}>(environment.apiUrl + '/getCart').pipe(
         map(response => response.data)
       )
   }

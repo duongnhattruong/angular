@@ -16,8 +16,10 @@ export class ProductService {
     );
   }
 
-  getProductsByPage(page: number): Observable<any[]> {
-    return this.http.get<{ message: string; data: any[] }>(`${environment.apiUrl}/getProduct/page/${page}`).pipe(
+  getProductsByPage(pageNumber: number, pageSize: number): Observable<any[]> {
+    return this.http.get<{ message: string; data: any[] }>(`${environment.apiUrl}/getProduct`, {
+      params: { pageNumber: pageNumber.toString(), pageSize: pageSize.toString() }
+    }).pipe(
       map(response => response.data)
     );
   }

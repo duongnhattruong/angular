@@ -25,7 +25,8 @@ export class StoreOwnerComponent implements OnInit {
   editProductForm: FormGroup;
   currentProductId: number | null = null;
   productIdToDelete: number | null = null;
-  page: number = 1;
+  pageNumber: number = 1;
+  pageSize: number = 8;
 
   constructor(
     private store: Store<ProductsState>,
@@ -56,13 +57,14 @@ export class StoreOwnerComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       if(params) {
-        this.page = params['page'];
+        this.pageSize = params['pageSize'];
+        this.pageNumber = params['pageNumber'];
       }
     });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadProductsByPage({page: this.page}));
+    this.store.dispatch(loadProductsByPage({pageNumber: this.pageNumber, pageSize: this.pageSize}));
   }
 
   openAddProductModal(): void {

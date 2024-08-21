@@ -38,10 +38,10 @@ export class LoginComponent {
       if(isLogin){
       
         if(this.role === 'admin'){
-          this.router.navigate(['/home'], { queryParams: {page: 1 } });
+          this.router.navigate(['/home'], { queryParams: {pageNumber: 1, pageSize: 8 } });
         }
         else{
-          this.router.navigate(['/order'], { queryParams: {page: 1 } });
+          this.router.navigate(['/order'], { queryParams: {pageNumber: 1, pageSize: 8 } });
         }
       }
     });

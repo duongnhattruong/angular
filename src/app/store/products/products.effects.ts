@@ -11,7 +11,7 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(ProductsActions.loadProductsByPage),
       mergeMap((action) =>
-        this.productService.getProductsByPage(action.page).pipe(
+        this.productService.getProductsByPage(action.pageNumber, action.pageSize).pipe(
           map(products => ProductsActions.loadProductsSuccess({ products })),
           catchError(error => of(ProductsActions.loadProductsFailure({ error })))
         )

@@ -18,7 +18,8 @@ export class OrderComponent implements OnInit {
   products: any = [];
   username = '';
   showAlert: boolean = false;
-  page: number = 1;
+  pageNumber: number = 1;
+  pageSize: number = 8;
   private readonly destroy$ = new Subject<void>();
 
   constructor(private store: Store<AuthState>, private router: Router, private route: ActivatedRoute) {
@@ -42,13 +43,14 @@ export class OrderComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       if(params) {
-        this.page = params['page'];
+        this.pageSize = params['pageSize'];
+        this.pageNumber = params['pageNumber'];
       }
     });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadProductsByPage({page: this.page}));
+    this.store.dispatch(loadProductsByPage({pageNumber: this.pageNumber, pageSize: this.pageSize}));
     this.store.select(selectIsAddToCartSuccessful).subscribe(value => {
       if(value){
         this.showAlertMessage();
